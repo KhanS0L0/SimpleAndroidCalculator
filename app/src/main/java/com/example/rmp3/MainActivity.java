@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
 
-    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonAdd, buttonSub, buttonDivision, buttonMul, buttonDot, buttonAC, buttonEqual;
+    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonAdd, buttonSub, buttonDivision, buttonMul, buttonDot, buttonAC, buttonEqual, buttonPM, buttonPercent;
 
     EditText editText;
 
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         buttonDivision = (Button) findViewById(R.id.buttonDivision);
         buttonAC = (Button) findViewById(R.id.buttonAC);
         buttonEqual = (Button) findViewById(R.id.buttonEqual);
+        buttonPM = (Button) findViewById(R.id.buttonPlusMinus);
+        buttonPercent = (Button) findViewById(R.id.buttonPercent);
         editText = (EditText) findViewById(R.id.edt1);
 
 
@@ -124,12 +126,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonPM.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v){
+                if (editText == null)
+                    editText.setText("");
+                else if (editText.getText().toString().isEmpty() && editText.getText().toString().equals("")){
+                    editText.setText("");
+                }else {
+                    float tmp = Float.parseFloat(editText.getText() + "");
+                    tmp *= -1;
+                    editText.setText(Float.toString(tmp));
+                }
+            }
+        });
+
+        buttonPercent.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                if(editText == null) {
+                    editText.setText("");
+                } else if (firstValue != 0.0 && subtraction) {
+                    float tmp = firstValue / 100;
+                    secondValue = Float.parseFloat(editText.getText() + "");
+                    tmp *= secondValue;
+                    tmp = firstValue - tmp;
+                    editText.setText(tmp + "");
+                } else if (firstValue != 0){
+                    firstValue = Float.parseFloat(editText.getText() + "");
+                    firstValue /= 100;
+                    editText.setText(firstValue + "");
+                }
+            }
+        });
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText == null) {
+                if (editText == null)
                     editText.setText("");
-                } else {
+                else {
                     firstValue = Float.parseFloat(editText.getText() + "");
                     addition = true;
                     editText.setText(null);
